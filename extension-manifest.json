@@ -1,0 +1,19 @@
+{
+  "name": "Galaxy Guard Ohio Next",
+  "version": "0.1.0",
+  "publisher": "your-publisher",
+  "engines": {
+    "vscode": ">=1.80.0"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "galaxy-guard-ohio-next.helloWorld",
+        "title": "Hello World"
+      }
+    ]
+  },
+  "activationEvents": [
+    "onCommand:galaxy-guard-ohio-next.helloWorld"
+  ]
+}

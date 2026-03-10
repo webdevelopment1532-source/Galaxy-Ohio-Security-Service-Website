@@ -1,0 +1,78 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci.yml'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'backend/**'
+
+jobs:
+  test-backend:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run backend tests
+        run: npm run test:backend
+        env:
+          # Test database credentials
+          DB_HOST: localhost
+          DB_PORT: 3306
+          DB_USER: test_user
+          DB_PASSWORD: test_password
+          DB_NAME: test_db
+          # Test integration credentials
+          SALES_CENTER_INTEGRATION_URL: https://test.example.com
+          OHIO_INTEGRATION_SECRET: test_secret_for_ci_only
+
+  security-scan:
+    name: Security Vulnerability Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run npm audit
+        run: npm audit --audit-level=high
+        continue-on-error: true
+      
+      - name: Check for known vulnerabilities
+        run: |
+          AUDIT_OUTPUT=$(npm audit --json)
+          HIGH_VULNS=$(echo $AUDIT_OUTPUT | jq '.metadata.vulnerabilities.high // 0')
+          CRITICAL_VULNS=$(echo $AUDIT_OUTPUT | jq '.metadata.vulnerabilities.critical // 0')
+          
+          echo "High vulnerabilities: $HIGH_VULNS"
+          echo "Critical vulnerabilities: $CRITICAL_VULNS"
+          
+          if [ "$CRITICAL_VULNS" -gt 0 ]; then
+            echo "❌ Critical vulnerabilities found!"
+            exit 1
+          fi
+          
+          if [ "$HIGH_VULNS" -gt 0 ]; then
+            echo "⚠️  High vulnerabilities found - review required"
+          fi

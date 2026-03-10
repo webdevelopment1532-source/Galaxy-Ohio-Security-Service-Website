@@ -1,0 +1,22 @@
+{
+  "schema_version": "v1",
+  "producer": "ohio-backend",
+  "topic": "ohio.sales_center.events",
+  "key": "evt-service-001",
+  "idempotency_key": "evt-service-001",
+  "event_version": "v1",
+  "trace_id": "trace-service-001",
+  "event": {
+    "event_id": "evt-service-001",
+    "event_type": "service.upsert",
+    "occurred_at": "2026-03-08T12:10:00.000Z",
+    "event_version": "v1",
+    "trace_id": "trace-service-001",
+    "payload": {
+      "external_id": "ohio-service-001",
+      "customer_external_id": "ohio-customer-001",
+      "service_type": "security-assessment",
+      "status": "scheduled"
+    }
+  }
+}

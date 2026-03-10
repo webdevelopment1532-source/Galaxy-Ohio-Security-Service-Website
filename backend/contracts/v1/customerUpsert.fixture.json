@@ -1,0 +1,22 @@
+{
+  "schema_version": "v1",
+  "producer": "ohio-backend",
+  "topic": "ohio.sales_center.events",
+  "key": "evt-customer-001",
+  "idempotency_key": "evt-customer-001",
+  "event_version": "v1",
+  "trace_id": "trace-customer-001",
+  "event": {
+    "event_id": "evt-customer-001",
+    "event_type": "customer.upsert",
+    "occurred_at": "2026-03-08T12:00:00.000Z",
+    "event_version": "v1",
+    "trace_id": "trace-customer-001",
+    "payload": {
+      "external_id": "ohio-customer-001",
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "phone": "+1-555-0100"
+    }
+  }
+}

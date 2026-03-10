@@ -1,0 +1,23 @@
+{
+  "schema_version": "v1",
+  "producer": "ohio-backend",
+  "topic": "ohio.sales_center.events",
+  "key": "evt-sale-001",
+  "idempotency_key": "evt-sale-001",
+  "event_version": "v1",
+  "trace_id": "trace-sale-001",
+  "event": {
+    "event_id": "evt-sale-001",
+    "event_type": "sale.upsert",
+    "occurred_at": "2026-03-08T12:05:00.000Z",
+    "event_version": "v1",
+    "trace_id": "trace-sale-001",
+    "payload": {
+      "external_id": "ohio-sale-001",
+      "customer_external_id": "ohio-customer-001",
+      "amount": 2500,
+      "currency": "USD",
+      "status": "completed"
+    }
+  }
+}

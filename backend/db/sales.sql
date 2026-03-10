@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS sales (
+  saleId VARCHAR(64) PRIMARY KEY,
+  amount DECIMAL(12,2) NOT NULL,
+  customerId VARCHAR(64) NOT NULL,
+  sale_date DATETIME NOT NULL,
+  status VARCHAR(32) NOT NULL,
+  notes TEXT
+);

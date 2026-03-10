@@ -1,0 +1,9 @@
+{
+  "remote.SSH.remotePlatform": {
+    "linux": true
+  },
+  "extensions": [
+    "ms-vscode-remote.remote-ssh",
+    "ms-vscode-remote.remote-containers"
+  ]
+}

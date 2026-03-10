@@ -38,29 +38,33 @@ export default function Home() {
         <div style={{ background: 'rgba(10,26,47,0.95)', borderRadius: '16px', padding: '1.5rem 1rem', marginBottom: '2rem', width: '100%', textAlign: 'center', boxShadow: '0 0 12px #0ff8', fontSize: '1.2rem', fontWeight: 700, letterSpacing: '2px' }}>GALAXY GUARD OHIO</div>
         <div style={{ direction: 'ltr', width: '100%' }}>
           {sidebarItems.map(item => (
-            <Link key={item.label} href={item.href} passHref legacyBehavior>
-              <a style={{ background: 'rgba(20,40,80,0.85)', color: '#7ecfff', textDecoration: 'none', fontWeight: 600, fontSize: '1.15rem', padding: '1rem 0', borderRadius: '10px', boxShadow: '0 0 6px #0ff4', marginBottom: '1rem', width: '90%', textAlign: 'center', transition: 'background 0.2s, color 0.2s', display: 'block', border: '2px solid #1a2747' }}
-                onMouseOver={e => { e.currentTarget.style.background = '#0a1a2f'; e.currentTarget.style.color = '#fff'; }}
-                onMouseOut={e => { e.currentTarget.style.background = 'rgba(20,40,80,0.85)'; e.currentTarget.style.color = '#7ecfff'; }}
-              >
-                {item.label}
-              </a>
+            <Link
+              key={item.label}
+              href={item.href}
+              style={{ background: 'rgba(20,40,80,0.85)', color: '#7ecfff', textDecoration: 'none', fontWeight: 600, fontSize: '1.15rem', padding: '1rem 0', borderRadius: '10px', boxShadow: '0 0 6px #0ff4', marginBottom: '1rem', width: '90%', textAlign: 'center', transition: 'background 0.2s, color 0.2s', display: 'block', border: '2px solid #1a2747' }}
+              onMouseOver={e => { e.currentTarget.style.background = '#0a1a2f'; e.currentTarget.style.color = '#fff'; }}
+              onMouseOut={e => { e.currentTarget.style.background = 'rgba(20,40,80,0.85)'; e.currentTarget.style.color = '#7ecfff'; }}>
+
+              {item.label}
+
             </Link>
           ))}
         </div>
       </aside>
       {/* Main Content */}
-        {/* Live Chat Widget */}
-        <LiveChatWidget />
+      {/* Live Chat Widget */}
+      <LiveChatWidget />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh', marginLeft: '180px', overflow: 'visible', position: 'relative', zIndex: 2, background: 'rgba(10,26,47,0.85)', paddingLeft: '0', paddingRight: '0' }}>
         {/* Navbar */}
         <nav style={{ width: '100%', background: 'linear-gradient(90deg, #1a2747 0%, #0a1a2f 100%)', color: '#fff', padding: '1.5rem 2vw 0 2vw', minHeight: '80px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', boxShadow: '0 2px 24px #0ff8', gap: '2rem', position: 'fixed', top: 0, left: 0, zIndex: 30 }}>
           <div style={{ width: '100%', overflowX: 'auto', whiteSpace: 'nowrap', scrollbarWidth: 'auto', paddingBottom: '0.5rem', paddingLeft: '18vw' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%' }}>
-              <Link href="/onboarding" passHref legacyBehavior>
-                <a style={{ background: '#ffe600', color: '#183d5c', fontWeight: 700, borderRadius: '8px', padding: '0.35rem 0.7rem', marginRight: '0.5rem', boxShadow: '0 0 8px #fff8', textDecoration: 'none', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span role="img" aria-label="rocket">🚀</span> Onboarding
-                </a>
+              <Link
+                href="/onboarding"
+                style={{ background: '#ffe600', color: '#183d5c', fontWeight: 700, borderRadius: '8px', padding: '0.35rem 0.7rem', marginRight: '0.5rem', boxShadow: '0 0 8px #fff8', textDecoration: 'none', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+
+                <span role="img" aria-label="rocket">🚀</span>Onboarding
+                                
               </Link>
               {[
                 { label: 'Create Account', href: '/create-account', icon: '👤' },
@@ -69,14 +73,29 @@ export default function Home() {
                 { label: 'About', href: '/about', icon: 'ℹ️' },
                 { label: 'Contact', href: '/contact', icon: '📞' },
               ].map(item => (
-                <Link key={item.label} href={item.href} passHref legacyBehavior>
-                  <a
-                    style={{ color: '#fff', textDecoration: 'none', fontWeight: 600, fontSize: '0.95rem', borderRadius: '8px', padding: '0.35rem 0.7rem', marginRight: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'background 0.2s' }}
-                    onMouseOver={e => (e.currentTarget.style.background = '#183d5c')}
-                    onMouseOut={e => (e.currentTarget.style.background = 'none')}
-                  >
-                    <span>{item.icon}</span> {item.label}
-                  </a>
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  style={{
+                    color: '#fff',
+                    textDecoration: 'none',
+                    fontWeight: 600,
+                    fontSize: '0.95rem',
+                    borderRadius: '8px',
+                    padding: '0.35rem 0.7rem',
+                    marginRight: '0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    transition: 'background 0.2s ease',
+                    background: 'rgba(24, 61, 92, 0.92)',
+                    boxShadow: '0 0 0 1px rgba(126, 207, 255, 0.18)',
+                  }}
+                  onMouseOver={e => (e.currentTarget.style.background = '#224b70')}
+                  onMouseOut={e => (e.currentTarget.style.background = 'rgba(24, 61, 92, 0.92)')}>
+
+                  <span aria-hidden="true">{item.icon}</span> {item.label}
+
                 </Link>
               ))}
             </div>
@@ -180,8 +199,8 @@ export default function Home() {
           <div style={{ maxWidth: '800px', margin: '2rem auto', background: '#1a2747', borderRadius: '16px', padding: '2rem', color: '#fff', boxShadow: '0 0 8px #0ff8' }}>
             <h3 style={{ color: '#7ecfff', marginBottom: '1rem' }}>Meet Our Team</h3>
             <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <TeamMember name="John Smith" role="Lead Security Engineer" image="/team-john.png" />
-              <TeamMember name="Jane Doe" role="Full Stack Developer" image="/team-jane.png" />
+              <TeamMember name="John Smith" role="Lead Security Engineer" image="/Galaxy-Guard-main-website-image.png" />
+              <TeamMember name="Jane Doe" role="Full Stack Developer" image="/Galaxy-Guard-main-website-image.png" />
             </div>
           </div>
           {/* Blog/News Section */}

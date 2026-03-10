@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  title: Sales Center Ohio Integration Events API
+  version: 1.0.0
+  description: >-
+    Contract for Ohio outbound events consumed by Sales Center.
+servers:
+  - url: https://sales-center.example.com
+paths:
+  /api/integrations/ohio/events:
+    post:
+      summary: Receive Ohio integration event
+      operationId: receiveOhioEvent
+      parameters:
+        - in: header
+          name: x-galaxy-timestamp
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: x-galaxy-signature
+          required: true
+          schema:
+            type: string
+            pattern: '^sha256=.*$'
+        - in: header
+          name: x-galaxy-event-version
+          required: true
+          schema:
+            type: string
+            pattern: '^v[0-9]+$'
+        - in: header
+          name: x-galaxy-event-id
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: x-galaxy-trace-id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OhioIntegrationEvent'
+      responses:
+        '202':
+          description: Event accepted for asynchronous processing.
+        '400':
+          description: Invalid payload.
+        '401':
+          description: Signature or timestamp invalid.
+components:
+  schemas:
+    OhioIntegrationEvent:
+      type: object
+      required:
+        - event_id
+        - event_type
+        - occurred_at
+        - payload
+      properties:
+        event_id:
+          type: string
+        event_type:
+          type: string
+          enum:
+            - customer.upsert
+            - sale.upsert
+            - service.upsert
+            - payment.upsert
+        occurred_at:
+          type: string
+          format: date-time
+        event_version:
+          type: string
+          pattern: '^v[0-9]+$'
+        trace_id:
+          type: string
+        payload:
+          type: object
+          additionalProperties: true

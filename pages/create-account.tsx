@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { StyledForm } from '../components/StyledForm';
+import { getBackendApiUrl } from '../lib/backendApi';
 
 const sidebarItems = [
   { label: 'Pen Testing', href: '/pen-testing' },
@@ -14,6 +15,7 @@ const sidebarItems = [
 ];
 
 export default function CreateAccount() {
+
   return (
     <div style={{ display: 'flex', minHeight: '100vh', width: '100vw', overflow: 'hidden', position: 'relative' }}>
       {/* Sidebar */}
@@ -23,13 +25,13 @@ export default function CreateAccount() {
         <div style={{ background: 'rgba(10,26,47,0.95)', borderRadius: '16px', padding: '1.5rem 1rem', marginBottom: '2rem', width: '100%', textAlign: 'center', boxShadow: '0 0 12px #0ff8', fontSize: '1.2rem', fontWeight: 700, letterSpacing: '2px' }}>GALAXY GUARD OHIO</div>
         <div style={{ direction: 'ltr', width: '100%' }}>
           {sidebarItems.map(item => (
-            <Link key={item.label} href={item.href} passHref legacyBehavior>
-              <a style={{ background: 'rgba(20,40,80,0.85)', color: '#7ecfff', textDecoration: 'none', fontWeight: 600, fontSize: '1.15rem', padding: '1rem 0', borderRadius: '10px', boxShadow: '0 0 6px #0ff4', marginBottom: '1rem', width: '90%', textAlign: 'center', transition: 'background 0.2s, color 0.2s', display: 'block', border: '2px solid #1a2747' }}
-                onMouseOver={e => { e.currentTarget.style.background = '#0a1a2f'; e.currentTarget.style.color = '#fff'; }}
-                onMouseOut={e => { e.currentTarget.style.background = 'rgba(20,40,80,0.85)'; e.currentTarget.style.color = '#7ecfff'; }}
-              >
-                {item.label}
-              </a>
+            <Link
+              key={item.label}
+              href={item.href}
+              style={{ background: 'rgba(20,40,80,0.85)', color: '#7ecfff', textDecoration: 'none', fontWeight: 600, fontSize: '1.15rem', padding: '1rem 0', borderRadius: '10px', boxShadow: '0 0 6px #0ff4', marginBottom: '1rem', width: '90%', textAlign: 'center', transition: 'background 0.2s, color 0.2s', display: 'block', border: '2px solid #1a2747' }}
+              onMouseOver={e => { e.currentTarget.style.background = '#0a1a2f'; e.currentTarget.style.color = '#fff'; }}
+              onMouseOut={e => { e.currentTarget.style.background = 'rgba(20,40,80,0.85)'; e.currentTarget.style.color = '#7ecfff'; }}>
+              {item.label}
             </Link>
           ))}
         </div>
@@ -40,22 +42,48 @@ export default function CreateAccount() {
           <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 1rem 2rem 1rem', background: 'rgba(10,26,47,0.95)' }}>
             <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#7ecfff', marginBottom: '1.5rem' }}>Create Account</h1>
             <p style={{ fontSize: '1.2rem', lineHeight: '1.7', maxWidth: '700px' }}>
-              Fill out the form below to create your account. Use the sidebar to navigate to other sections or return to the homepage.
+              Fill out the form below to create your account.
             </p>
             <StyledForm
               title="Create Account"
               buttonText="Sign Up"
               fields={[
-                { label: 'Full Name', name: 'name', type: 'text', icon: '👤', required: true },
-                { label: 'Email', name: 'email', type: 'email', icon: '✉️', required: true },
-                { label: 'Password', name: 'password', type: 'password', icon: '🔒', required: true },
+                { label: 'Full Name', name: 'name', type: 'text', icon: '👤', required: true, autocomplete: 'name' },
+                { label: 'Email', name: 'email', type: 'email', icon: '✉️', required: true, autocomplete: 'email' },
+                { label: 'Password', name: 'password', type: 'password', icon: '🔒', required: true, autocomplete: 'current-password' },
+                {
+                  label: 'Role',
+                  name: 'role',
+                  type: 'select',
+                  required: true,
+                  autocomplete: 'organization-title',
+                  options: [
+                    { label: 'Customer (default)', value: 'customer' },
+                    { label: 'Company Owner', value: 'owner' },
+                    { label: 'Manager', value: 'manager' },
+                    { label: 'Employee', value: 'employee' },
+                    { label: 'Intern', value: 'intern' }
+                  ]
+                }
               ]}
-              onSubmit={async (formData) => {
+              onSubmit={async (formData, event) => {
+                event?.preventDefault();
+                event?.stopPropagation();
+                if (!formData.name || !formData.email || !formData.password || !formData.role) {
+                  alert('Please fill out all fields.');
+                  return;
+                }
                 try {
-                  const res = await fetch('/api/register', {
+                  const payload = {
+                    full_name: formData.name,
+                    email: formData.email,
+                    password: formData.password,
+                    role: formData.role
+                  };
+                  const res = await fetch(getBackendApiUrl('/api/register'), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData),
+                    body: JSON.stringify(payload),
                   });
                   const data = await res.json();
                   if (res.ok) {
@@ -63,7 +91,7 @@ export default function CreateAccount() {
                   } else {
                     alert(data.error || 'Registration failed.');
                   }
-                } catch (err) {
+                } catch {
                   alert('Server error.');
                 }
               }}

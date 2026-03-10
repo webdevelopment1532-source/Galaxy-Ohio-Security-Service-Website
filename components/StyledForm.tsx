@@ -11,14 +11,35 @@ export function StyledForm({
   fields: Array<{
     label: string;
     name: string;
-    type: 'text' | 'email' | 'password' | 'textarea';
+    type: 'text' | 'email' | 'password' | 'textarea' | 'select';
     icon?: string;
     required?: boolean;
     rows?: number;
+    options?: Array<{ label: string; value: string }>;
+    autocomplete?: string;
   }>;
-  onSubmit?: React.FormEventHandler<HTMLFormElement>;
+  onSubmit?: (formData: Record<string, any>, event: React.FormEvent<HTMLFormElement>) => void;
 }) {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [formState, setFormState] = React.useState(() => {
+    const initial: Record<string, any> = {};
+    fields.forEach(field => { initial[field.name] = ''; });
+    return initial;
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormState({ ...formState, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    if (event) event.preventDefault();
+    if (event) event.stopPropagation();
+    // Never allow default browser submission
+    if (onSubmit) {
+      onSubmit(formState, event);
+    }
+    return false;
+  };
   return (
     <form
       style={{
@@ -35,7 +56,7 @@ export function StyledForm({
         gap: '1.2rem',
         margin: '0 auto',
       }}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
     >
       {title && (
         <h2 style={{ color: '#7ecfff', fontWeight: 800, fontSize: '2rem', marginBottom: '0.5rem' }}>{title}</h2>
@@ -49,20 +70,25 @@ export function StyledForm({
               name={field.name}
               rows={field.rows || 2}
               required={field.required}
+              value={formState[field.name]}
+              onChange={handleChange}
               style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '2px solid #7ecfff', marginTop: '0.3rem', fontSize: '1.05rem', background: '#0a1a2f', color: '#fff', resize: 'vertical', outline: 'none', transition: 'border 0.2s' }}
               onFocus={e => (e.target.style.border = '2px solid #ffe600')}
               onBlur={e => (e.target.style.border = '2px solid #7ecfff')}
             />
           ) : field.type === 'password' ? (
             <div style={{ position: 'relative', width: '100%', boxSizing: 'border-box', marginTop: '0.3rem' }}>
-              <input
-                type={showPassword ? 'text' : 'password'}
-                name={field.name}
-                required={field.required}
-                style={{ width: '100%', boxSizing: 'border-box', padding: '0.8rem 2.5rem 0.8rem 0.8rem', borderRadius: '8px', border: '2px solid #7ecfff', fontSize: '1.05rem', background: '#0a1a2f', color: '#fff', outline: 'none', transition: 'border 0.2s', display: 'block' }}
-                onFocus={e => (e.target.style.border = '2px solid #ffe600')}
-                onBlur={e => (e.target.style.border = '2px solid #7ecfff')}
-              />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name={field.name}
+                  required={field.required}
+                  value={formState[field.name]}
+                  onChange={handleChange}
+                  style={{ width: '100%', boxSizing: 'border-box', padding: '0.8rem 2.5rem 0.8rem 0.8rem', borderRadius: '8px', border: '2px solid #7ecfff', fontSize: '1.05rem', background: '#0a1a2f', color: '#fff', outline: 'none', transition: 'border 0.2s', display: 'block' }}
+                  onFocus={e => (e.target.style.border = '2px solid #ffe600')}
+                  onBlur={e => (e.target.style.border = '2px solid #7ecfff')}
+                  autoComplete={field.autocomplete || (field.name.toLowerCase().includes('password') ? 'current-password' : undefined)}
+                />
               <span
                 onClick={() => setShowPassword(v => !v)}
                 style={{ position: 'absolute', right: '0.8rem', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', fontSize: '1.3rem', color: showPassword ? '#ffe600' : '#7ecfff', userSelect: 'none', background: 'transparent', padding: 0 }}
@@ -71,15 +97,32 @@ export function StyledForm({
                 {showPassword ? '🙈' : '👁️'}
               </span>
             </div>
+          ) : field.type === 'select' ? (
+            <select
+                name={field.name}
+                required={field.required}
+                value={formState[field.name]}
+                onChange={handleChange}
+                style={{ width: '100%', padding: '0.5rem', borderRadius: '8px', border: '2px solid #7ecfff', fontSize: '1rem', marginTop: '0.5rem', background: '#0a1a2f', color: '#fff' }}
+                autoComplete={field.autocomplete || (field.name.toLowerCase().includes('role') ? 'organization-title' : undefined)}
+            >
+              <option value="">Select role...</option>
+              {field.options && field.options.map(opt => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
           ) : (
             <div style={{ position: 'relative', width: '100%', boxSizing: 'border-box', marginTop: '0.3rem' }}>
               <input
                 type={field.type}
                 name={field.name}
                 required={field.required}
+                value={formState[field.name]}
+                onChange={handleChange}
                 style={{ width: '100%', boxSizing: 'border-box', padding: '0.8rem 2.5rem 0.8rem 0.8rem', borderRadius: '8px', border: '2px solid #7ecfff', fontSize: '1.05rem', background: '#0a1a2f', color: '#fff', outline: 'none', transition: 'border 0.2s', display: 'block' }}
                 onFocus={e => (e.target.style.border = '2px solid #ffe600')}
                 onBlur={e => (e.target.style.border = '2px solid #7ecfff')}
+                autoComplete={field.autocomplete || (field.name.toLowerCase().includes('name') ? 'name' : field.name.toLowerCase().includes('email') ? 'email' : undefined)}
               />
               {field.icon && (
                 <span

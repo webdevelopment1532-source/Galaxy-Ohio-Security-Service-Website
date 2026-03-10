@@ -10,9 +10,9 @@ export default function SecurityAssessment() {
         </p>
         <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
           <label htmlFor="name" style={{ fontWeight: 700, marginBottom: '0.5rem', fontSize: '1.08rem', letterSpacing: '0.5px' }}>Name</label>
-          <input id="name" name="name" type="text" required style={{ padding: '1rem', borderRadius: '10px', border: '2px solid #7ecfff', fontSize: '1.08rem', background: '#0a1a2f', color: '#fff', marginBottom: '0.5rem' }} />
+          <input id="name" name="name" type="text" required autoComplete="name" style={{ padding: '1rem', borderRadius: '10px', border: '2px solid #7ecfff', fontSize: '1.08rem', background: '#0a1a2f', color: '#fff', marginBottom: '0.5rem' }} />
           <label htmlFor="email" style={{ fontWeight: 700, marginBottom: '0.5rem', fontSize: '1.08rem', letterSpacing: '0.5px' }}>Email</label>
-          <input id="email" name="email" type="email" required style={{ padding: '1rem', borderRadius: '10px', border: '2px solid #7ecfff', fontSize: '1.08rem', background: '#0a1a2f', color: '#fff', marginBottom: '0.5rem' }} />
+          <input id="email" name="email" type="email" required autoComplete="email" style={{ padding: '1rem', borderRadius: '10px', border: '2px solid #7ecfff', fontSize: '1.08rem', background: '#0a1a2f', color: '#fff', marginBottom: '0.5rem' }} />
           <label htmlFor="website" style={{ fontWeight: 700, marginBottom: '0.5rem', fontSize: '1.08rem', letterSpacing: '0.5px' }}>Website/Business</label>
           <input id="website" name="website" type="text" style={{ padding: '1rem', borderRadius: '10px', border: '2px solid #7ecfff', fontSize: '1.08rem', background: '#0a1a2f', color: '#fff', marginBottom: '0.5rem' }} />
           <label htmlFor="details" style={{ fontWeight: 700, marginBottom: '0.5rem', fontSize: '1.08rem', letterSpacing: '0.5px' }}>Details/Concerns</label>

@@ -1,0 +1,91 @@
+{
+  "$ref": "#/definitions/OhioBrokerEnvelopeContractV2Schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "OhioBrokerEnvelopeContractV2<OhioIntegrationEventContract>": {
+      "additionalProperties": false,
+      "properties": {
+        "event": {
+          "$ref": "#/definitions/OhioIntegrationEventContract"
+        },
+        "event_version": {
+          "type": "string"
+        },
+        "idempotency_key": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "producer": {
+          "const": "ohio-backend",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "v2",
+          "type": "string"
+        },
+        "topic": {
+          "type": "string"
+        },
+        "trace_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "event",
+        "event_version",
+        "idempotency_key",
+        "key",
+        "producer",
+        "schema_version",
+        "topic",
+        "trace_id"
+      ],
+      "type": "object"
+    },
+    "OhioBrokerEnvelopeContractV2Schema": {
+      "$ref": "#/definitions/OhioBrokerEnvelopeContractV2%3COhioIntegrationEventContract%3E"
+    },
+    "OhioEventType": {
+      "enum": [
+        "customer.upsert",
+        "sale.upsert",
+        "service.upsert",
+        "payment.upsert"
+      ],
+      "type": "string"
+    },
+    "OhioIntegrationEventContract": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "type": "string"
+        },
+        "event_type": {
+          "$ref": "#/definitions/OhioEventType"
+        },
+        "event_version": {
+          "type": "string"
+        },
+        "occurred_at": {
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "trace_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "event_type",
+        "occurred_at",
+        "payload"
+      ],
+      "type": "object"
+    }
+  }
+}

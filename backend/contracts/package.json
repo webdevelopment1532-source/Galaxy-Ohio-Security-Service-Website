@@ -1,0 +1,27 @@
+{
+  "name": "@galaxyguard/ohio-integration-contracts",
+  "version": "1.0.0",
+  "description": "Versioned Ohio->Sales Center integration contract artifacts",
+  "license": "UNLICENSED",
+  "private": false,
+  "type": "module",
+  "types": "./types/ohioContractTypes.d.ts",
+  "files": [
+    "README.md",
+    "INTEGRATION_CONSUMER_GUIDE.md",
+    "examples/**/*",
+    "types/**/*.d.ts",
+    "v1/**/*.json",
+    "v2/**/*.json"
+  ],
+  "exports": {
+    ".": "./types/ohioContractTypes.d.ts",
+    "./consumer-guide": "./INTEGRATION_CONSUMER_GUIDE.md",
+    "./examples/validateOhioContracts": "./examples/validateOhioContracts.cjs",
+    "./types/ohioContractTypes": "./types/ohioContractTypes.d.ts",
+    "./v1/schema": "./v1/ohioBrokerEnvelope.schema.json",
+    "./v2/schema": "./v2/ohioBrokerEnvelope.schema.json",
+    "./v1/*": "./v1/*.json",
+    "./v2/*": "./v2/*.json"
+  }
+}
