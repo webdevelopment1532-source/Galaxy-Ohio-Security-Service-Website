@@ -1,6 +1,13 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 
+
+![Build Status](https://github.com/webdevelopment1532-source/Galaxy-Ohio-Security-Service-Website/actions/workflows/ci.yml/badge.svg)
+![CodeQL](https://github.com/webdevelopment1532-source/Galaxy-Ohio-Security-Service-Website/actions/workflows/codeql-analysis.yml/badge.svg)
+![Dependabot](https://github.com/webdevelopment1532-source/Galaxy-Ohio-Security-Service-Website/actions/workflows/dependabot.yml/badge.svg)
+![Contributors](https://img.shields.io/github/contributors/webdevelopment1532-source/Galaxy-Ohio-Security-Service-Website)
+![License](https://img.shields.io/github/license/webdevelopment1532-source/Galaxy-Ohio-Security-Service-Website)
+
 Production-grade Next.js application for Galaxy Guard Ohio with comprehensive testing, accessibility-first design, and secure Sales Center integration.
 
 ---

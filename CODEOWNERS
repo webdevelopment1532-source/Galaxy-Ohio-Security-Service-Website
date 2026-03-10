@@ -1,0 +1,4 @@
+# Define code owners for review
+* @webdevelopment1532-source
+backend/ @webdevelopment1532-source
+components/ @webdevelopment1532-source
